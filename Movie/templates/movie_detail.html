@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ movie.title }} - MovieStream{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <img src="{{ url_for('static', filename='uploads/' + movie.poster_path) }}" class="img-fluid rounded" alt="{{ movie.title }}">
+    </div>
+    <div class="col-md-8">
+        <h1>{{ movie.title }}</h1>
+        <p class="text-muted">{{ movie.release_year }} | {{ movie.genre }}</p>
+        <p>{{ movie.description }}</p>
+
+        {% if 'user_id' in session %}
+        <a href="{{ url_for('watch_movie', movie_id=movie.id) }}" class="btn btn-lg btn-success">Watch Now</a>
+        {% else %}
+        <div class="alert alert-warning">
+            Please <a href="{{ url_for('login') }}">login</a> to watch this movie.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

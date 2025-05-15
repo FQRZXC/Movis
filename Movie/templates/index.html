@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}MovieStream - Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">Latest Movies</h1>
+    </div>
+</div>
+
+<div class="row">
+    {% for movie in movies %}
+    <div class="col-md-3">
+        <div class="card movie-card bg-dark">
+            <img src="{{ url_for('static', filename='uploads/' + movie.poster_path) }}" class="card-img-top movie-poster" alt="{{ movie.title }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                <p class="card-text text-muted">{{ movie.release_year }} | {{ movie.genre }}</p>
+                <a href="{{ url_for('movie_detail', movie_id=movie.id) }}" class="btn btn-primary">Details</a>
+                {% if 'user_id' in session %}
+                <a href="{{ url_for('watch_movie', movie_id=movie.id) }}" class="btn btn-success">Watch</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

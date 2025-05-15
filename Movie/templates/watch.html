@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Watch {{ movie.title }} - MovieStream{% endblock %}
+
+{% block styles %}
+<style>
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+    }
+    .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1>{{ movie.title }}</h1>
+        <p class="text-muted">{{ movie.release_year }} | {{ movie.genre }}</p>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-12">
+        <div class="video-container">
+            <video controls autoplay>
+                <source src="{{ url_for('static', filename='uploads/' + movie.video_path) }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <h3>Description</h3>
+        <p>{{ movie.description }}</p>
+    </div>
+</div>
+{% endblock %}
